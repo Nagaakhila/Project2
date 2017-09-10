@@ -1,7 +1,6 @@
 package com.niit.DAO;
 import java.util.List;
 
-import com.niit.model.Blog;
 import com.niit.model.Forum;
 
 public interface ForumDAO {

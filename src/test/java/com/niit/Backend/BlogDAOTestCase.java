@@ -1,4 +1,4 @@
-package com.niit.BlogTestCase;
+package com.niit.Backend;
 
 import static org.junit.Assert.*;
 

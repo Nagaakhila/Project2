@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.DAO.BlogDAO;
 import com.niit.DAO.BlogDAOImpl;
+import com.niit.DAO.ForumDAO;
+import com.niit.DAO.ForumDAOImpl;
 import com.niit.model.Blog;
+import com.niit.model.Forum;
 
 
 
@@ -48,28 +52,36 @@ public class DBConfig {
 		return properties;
 
 	}
+	@Autowired
 	@Bean
       public SessionFactory getSessionFactory()
      {
 	LocalSessionFactoryBuilder localsessionFactory = new LocalSessionFactoryBuilder(getDataSource());
 	localsessionFactory.addProperties(getHibernateProperties());
 	localsessionFactory.addAnnotatedClass(Blog.class);
+	localsessionFactory.addAnnotatedClass(Forum.class);
 	System.out.println("Session created");
 	return localsessionFactory.buildSessionFactory();
       }
-
+	@Autowired
       @Bean
       public HibernateTransactionManager getTransaction(SessionFactory sessionFactory)
       {
     	 	System.out.println("Transaction");
 		    return new HibernateTransactionManager(sessionFactory);
       }
- 
-     @Bean
+      @Autowired
+     @Bean(name = "blogDAO")
      public BlogDAO getBlogDAO(SessionFactory sessionFactory)
      {
     	 return new BlogDAOImpl(sessionFactory);
      }
      
+      @Autowired
+      @Bean(name = "forumDAO")
+      public ForumDAO getForumDAO(SessionFactory sessionFactory)
+      {
+     	 return new ForumDAOImpl(sessionFactory);
+      }
 }
 
