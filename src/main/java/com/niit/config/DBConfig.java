@@ -4,8 +4,6 @@ package com.niit.config;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +24,7 @@ import com.niit.model.Forum;
 
 
 @Configuration
-@ComponentScan("com.collaborate")
+@ComponentScan("com.niit.*")
 @EnableTransactionManagement
 public class DBConfig {
 	
@@ -63,18 +61,20 @@ public class DBConfig {
 	System.out.println("Session created");
 	return localsessionFactory.buildSessionFactory();
       }
-	@Autowired
-      @Bean
+	
+		@Autowired
+		@Bean
       public HibernateTransactionManager getTransaction(SessionFactory sessionFactory)
       {
     	 	System.out.println("Transaction");
 		    return new HibernateTransactionManager(sessionFactory);
       }
-      @Autowired
+		
+     @Autowired
      @Bean(name = "blogDAO")
      public BlogDAO getBlogDAO(SessionFactory sessionFactory)
      {
-    	 return new BlogDAOImpl(sessionFactory);
+     return new BlogDAOImpl(sessionFactory);
      }
      
       @Autowired

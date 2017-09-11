@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.niit.model.BlogComment;
 
-@Repository("blogDAO")
 public class BlogCommentDAOImpl implements BlogCommentDAO {
 	
 	@Autowired

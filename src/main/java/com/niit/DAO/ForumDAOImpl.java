@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.niit.model.Forum;
 
-@Repository("blogDAO")
 public class ForumDAOImpl implements ForumDAO {
 	
 	@Autowired

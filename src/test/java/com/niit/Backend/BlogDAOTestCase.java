@@ -2,32 +2,41 @@ package com.niit.Backend;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.niit.DAO.BlogDAO;
 import com.niit.model.Blog;
 
+@ComponentScan("com.niit")
 public class BlogDAOTestCase {
 	
+@Autowired	
 static BlogDAO blogDAO;
-	
+@Autowired
+static Blog blog;
+
+	@SuppressWarnings("resource")
 	@BeforeClass
 	public static void initialize()
 	{
 		AnnotationConfigApplicationContext annotationConfigAppContext=new AnnotationConfigApplicationContext();
-		annotationConfigAppContext.scan("com.collaborate");
+		annotationConfigAppContext.scan("com.niit.*");
 		annotationConfigAppContext.refresh();
+		
 		blogDAO=(BlogDAO)annotationConfigAppContext.getBean("blogDAO");
+		blog=(Blog)annotationConfigAppContext.getBean("blog");
 	
 	}
 	
 	@Test
 	public void createBlogtest()
 	{
-		Blog blog=new Blog();
 		blog.setBlogId(111);
 		blog.setBlogName("Akhila");
 		blog.setBlogContent("I like singing");
@@ -42,7 +51,6 @@ static BlogDAO blogDAO;
 	@Test
 	public void approveBlogTest()
 	{
-		Blog blog=new Blog();
 		blog.setBlogName("Akhila");
 		blog.setBlogContent("I like dancing");
 		blog.setCreateDate(new java.util.Date());
@@ -53,7 +61,6 @@ static BlogDAO blogDAO;
 	@Test
 	public void editBlogTest()
 	{
-	Blog blog = new Blog();
 	blog.setBlogId(1001);
 	blog.setBlogName("NagaAkhila");
 	blog.setBlogContent("NagaAkhila likes cooking ");
@@ -66,7 +73,6 @@ static BlogDAO blogDAO;
 	@Test
 	public void deleteBlogTest()
 	{
-	Blog blog = new Blog();
 	blog.setBlogId(1001);
 	assertTrue("Problem in approving Blog",blogDAO.deleteBlog(blog.getBlogId()));	
 	}
@@ -74,7 +80,6 @@ static BlogDAO blogDAO;
 	@Test
 	public void getBlogTest()
 	{
-	Blog blog = new Blog();
 	blog.setBlogId(1001);
    /* assertTrue("Problem in getting blog",blogDAO.getBlogdetails(blog.getBlogId())>0);*/
 	}

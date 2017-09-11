@@ -5,44 +5,50 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.niit.DAO.ForumDAO;
 import com.niit.model.Forum;
 
+@ComponentScan("com.niit")
+
 public class ForumDAOTestCase {
-	
+@Autowired	
 static ForumDAO forumDAO;
-	
-	@BeforeClass
+@Autowired	
+static Forum forum;
+
+@SuppressWarnings("resource")
+@BeforeClass
 	public static void initialize()
 	{
 		AnnotationConfigApplicationContext annotationConfigAppContext=new AnnotationConfigApplicationContext();
-		annotationConfigAppContext.scan("com.niit");
+		annotationConfigAppContext.scan("com.niit.*");
 		annotationConfigAppContext.refresh();
 	    forumDAO=(ForumDAO)annotationConfigAppContext.getBean("forumDAO");
+	    forum=(Forum)annotationConfigAppContext.getBean("forum");
 	
 	}
 	
 	@Test
 	public void createForumtest()
 	{
-		Forum forum=new Forum();
-		forum.setForumId(111);
+		forum.setForumId(112);
 		forum.setForumName("Akhila");
 		forum.setForumContent("I like singing");
 		forum.setCreateDate(new java.util.Date());
 		forum.setStatus("NA");
 		forum.setLikes(0);
-		assertTrue("Problem in Blog Creation",forumDAO.createForum(forum));
+		assertTrue("Problem in Forum Creation",forumDAO.createForum(forum));
 	
 	}
 	
 	@Ignore
 	@Test
-	public void approveBlogTest()
+	public void approveForumTest()
 	{
-		Forum forum=new Forum();
 		forum.setForumName("Akhila");
 		forum.setForumContent("I like dancing");
 		forum.setCreateDate(new java.util.Date());
@@ -51,31 +57,29 @@ static ForumDAO forumDAO;
 		assertTrue("Problem in approving Forum",forumDAO.approveForum(forum));	
 	}
 	@Test
-	public void editBlogTest()
+	public void editForumTest()
 	{
-    Forum forum=new Forum();
-    forum.setForumId(1001);
+    forum.setForumId(1002);
     forum.setForumName("NagaAkhila");
     forum.setForumContent("NagaAkhila likes cooking ");
     forum.setCreateDate(new java.util.Date());
     forum.setStatus("NA");
     forum.setLikes(0);
-	assertTrue("Problem in approving Blog",forumDAO.editForum(forum.getForumId()));	
+	assertTrue("Problem in approving Forum",forumDAO.editForum(forum.getForumId()));	
 	}
 	
 	@Test
-	public void deleteBlogTest()
+	public void deleteForumTest()
 	{
-		Forum forum = new Forum();
 		forum.setForumId(1001);
-	assertTrue("Problem in approving Blog",forumDAO.deleteForum(forum.getForumId()));	
+	assertTrue("Problem in approving Forum",forumDAO.deleteForum(forum.getForumId()));	
 	}
 	
 	@Test
-	public void getBlogTest()
+	public void getForumTest()
 	{
-		Forum forum = new Forum();
 		forum.setForumId(1001);
+		 /* assertTrue("Problem in getting forum",forumDAO.getforumdetails(forum.getforumId())>0);*/
 
 	}
 	
